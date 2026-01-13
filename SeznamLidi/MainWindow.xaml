@@ -11,7 +11,7 @@
         <ListView Name="LV" ItemsSource="{Binding}" Width="270" Height="380" Margin="0,27,0,27" HorizontalAlignment="Center">
             <ListView.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add" Click="OnClick"/>
+                    <MenuItem Header="Add" Click="AddClick"/>
                     <MenuItem Header="Update" Click="OnClick"/>
                     <MenuItem Header="Remove" Click="OnClick"/>
                     <MenuItem Header="Detail" Click="OnClick"/>
