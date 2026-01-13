@@ -1,0 +1,23 @@
+﻿<Window x:Class="SeznamLidi.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SeznamLidi"
+        mc:Ignorable="d"
+        Background="DarkSeaGreen"
+        Title="MainWindow" Height="450" Width="300">
+    <Grid>
+        <ListView Name="LV" ItemsSource="{Binding}" Width="270" Height="380" Margin="0,27,0,27" HorizontalAlignment="Center">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add" Click="OnClick"/>
+                    <MenuItem Header="Update" Click="OnClick"/>
+                    <MenuItem Header="Remove" Click="OnClick"/>
+                    <MenuItem Header="Detail" Click="OnClick"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+        </ListView>
+
+    </Grid>
+</Window>
