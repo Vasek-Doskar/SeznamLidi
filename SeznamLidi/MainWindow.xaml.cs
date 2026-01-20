@@ -63,15 +63,13 @@ namespace SeznamLidi
 
         void AddClick(object sender, RoutedEventArgs e)
         {
-            //CreateNewPersonWindow CNPW = new(PersonManager);
             using var scope = _provider.CreateScope();
             CreateNewPersonWindow CNPW = scope.ServiceProvider.GetRequiredService<CreateNewPersonWindow>();
             CNPW.Owner = this;
 
             if (CNPW.ShowDialog() == true)
             {
-                Data.Add(CNPW.newPerson);
-              
+                Data.Add(CNPW.newPerson);              
             }
         }
     }

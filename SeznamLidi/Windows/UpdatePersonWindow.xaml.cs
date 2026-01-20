@@ -35,6 +35,7 @@ namespace SeznamLidi.Windows
             if (Person != null)
             {
                 _manager.Update(Person);
+                DialogResult = true;
                 Close();
             }
         }

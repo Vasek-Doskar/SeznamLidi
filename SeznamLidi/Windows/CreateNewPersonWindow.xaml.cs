@@ -26,6 +26,7 @@ namespace SeznamLidi.Windows
                 int age = int.Parse(Age.Text);
                 newPerson = new Person { Age = age ,FirstName=firstName,LastName=lastName};
                 _manager.Add(newPerson);
+                DialogResult = true;
                 this.Close();
             }
             catch (FormatException ex)
