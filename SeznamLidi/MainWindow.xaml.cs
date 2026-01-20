@@ -28,9 +28,20 @@ namespace SeznamLidi
 
         void OnClick(object sender, RoutedEventArgs e) { }
 
+        void OnRemoveClick(object sender, RoutedEventArgs e) {
+            Person? selected = LV.SelectedItem as Person;
+            if (selected != null) {
+
+                PersonManager.Delete(selected.Id);
+                Data.Remove(selected);
+            
+            }
+        }
+
         void AddClick(object sender, RoutedEventArgs e) 
         {
             CreateNewPersonWindow CNPW = new(PersonManager);
+            CNPW.Owner = this;
             CNPW.Closed += (s, e) => { Data.Add(CNPW.newPerson); };
             CNPW.ShowDialog();
         }
