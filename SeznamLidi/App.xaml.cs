@@ -24,6 +24,7 @@ namespace SeznamLidi
             // registrace služeb do DI
             services.AddScoped<IPersonManager, PersonManager>();
             services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<ICRUDWindowFactory, CRUDWindowFactory>();
 
             services.AddTransient<MainWindow>();
             services.AddTransient<CreateNewPersonWindow>();

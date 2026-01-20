@@ -17,12 +17,14 @@ namespace SeznamLidi
     public partial class MainWindow : Window
     {
         private readonly IServiceProvider _provider;
+        private readonly ICRUDWindowFactory _factory;
         public ObservableCollection<Person> Data { get; set; }
 
         public IPersonManager PersonManager { get; set; }
-        public MainWindow(IServiceProvider provider)
+        public MainWindow(IServiceProvider provider, ICRUDWindowFactory factory)
         {
             _provider = provider;
+            _factory = factory;
 
             var scope = _provider.CreateScope();
             PersonManager = scope.ServiceProvider.GetRequiredService<IPersonManager>();
@@ -39,19 +41,12 @@ namespace SeznamLidi
             Person? person = LV.SelectedItem as Person;
             if (person != null)
             {
-
-                UpdatePersonWindow updatePersonWindow = _provider.GetRequiredService<UpdatePersonWindow>();
-                updatePersonWindow.Person = person;
-
-                updatePersonWindow.Closed += (s, e) =>
+                UpdatePersonWindow updatePersonWindow = _factory.CreateUpdateWindow(person.Id);
+                if (updatePersonWindow.ShowDialog() == true)
                 {
-                    Data = new ObservableCollection<Person>(PersonManager.GetAll());
-                    LV.DataContext = Data;
-                };
-
-                updatePersonWindow.Owner = this;
-
-                updatePersonWindow.Show();
+                    int index = Data.IndexOf(person);
+                    Data[index] = PersonManager.GetById(person.Id);
+                }
             }
         }
 
@@ -71,8 +66,12 @@ namespace SeznamLidi
             using var scope = _provider.CreateScope();
             CreateNewPersonWindow CNPW = scope.ServiceProvider.GetRequiredService<CreateNewPersonWindow>();
             CNPW.Owner = this;
-            CNPW.Closed += (s, e) => { Data.Add(CNPW.newPerson); };
-            CNPW.ShowDialog();
+            //CNPW.Closed += (s, e) => { Data.Add(CNPW.newPerson); };
+            bool result =  CNPW.ShowDialog() == true;
+            if (result)
+            {
+                Data.Add(CNPW.newPerson);
+            }
         }
     }
 

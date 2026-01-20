@@ -12,16 +12,19 @@ namespace SeznamLidi.Windows
     {
         private readonly IPersonManager _manager;
         private readonly IServiceScope _scope;
-        public Person Person { get; set; }
+        
+        public Person Person{get;set;}
+        //public Person? Person { get => _person; set { _person = value; DataContext = _person; } }
+        //private Person? _person;
         private readonly IServiceProvider _provider;
-        public UpdatePersonWindow(IServiceProvider provider)
+        public UpdatePersonWindow(IServiceProvider provider, int id)
         {
             _provider = provider;
             _scope = _provider.CreateScope();
             _manager = _scope.ServiceProvider.GetRequiredService<IPersonManager>();
-           
+            Person = _manager.GetById(id);
             InitializeComponent();
-            DataContext = Person;
+            
         }
 
 
