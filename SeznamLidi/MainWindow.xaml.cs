@@ -8,6 +8,7 @@ using SeznamLidi.Windows;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Automation.Peers;
+using System.Windows.Data;
 
 namespace SeznamLidi
 {
@@ -66,11 +67,11 @@ namespace SeznamLidi
             using var scope = _provider.CreateScope();
             CreateNewPersonWindow CNPW = scope.ServiceProvider.GetRequiredService<CreateNewPersonWindow>();
             CNPW.Owner = this;
-            //CNPW.Closed += (s, e) => { Data.Add(CNPW.newPerson); };
-            bool result =  CNPW.ShowDialog() == true;
-            if (result)
+
+            if (CNPW.ShowDialog() == true)
             {
                 Data.Add(CNPW.newPerson);
+              
             }
         }
     }

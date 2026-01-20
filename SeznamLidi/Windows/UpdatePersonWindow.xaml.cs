@@ -23,6 +23,7 @@ namespace SeznamLidi.Windows
             _scope = _provider.CreateScope();
             _manager = _scope.ServiceProvider.GetRequiredService<IPersonManager>();
             Person = _manager.GetById(id);
+            DataContext = Person;
             InitializeComponent();
             
         }
