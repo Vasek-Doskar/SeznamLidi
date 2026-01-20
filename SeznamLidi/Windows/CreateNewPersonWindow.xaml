@@ -15,8 +15,8 @@
         <TextBox x:Name="LN" HorizontalAlignment="Left" Margin="201,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="Age:" HorizontalAlignment="Left" Margin="129,0,0,0" VerticalAlignment="Center"/>
         <TextBox x:Name="Age" HorizontalAlignment="Left" Margin="201,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
-        <Button Content="Save" HorizontalAlignment="Left" Margin="133,175,0,0" VerticalAlignment="Top" Width="100" Click="SaveButton_Click"/>
-        <Button Content="Discard and Close" HorizontalAlignment="Left" Margin="250,175,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button Content="Save" HorizontalAlignment="Left" Margin="75,176,0,0" VerticalAlignment="Top" Width="100" Click="SaveButton_Click"/>
+        <Button Content="Discard and Close" Margin="192,176,68,0" VerticalAlignment="Top"/>
         <Image Source="/Resources/add-user.png" HorizontalAlignment="Left" Height="100" Margin="19,42,0,0" VerticalAlignment="Top" Width="100"/>
     </Grid>
 </Window>

@@ -7,16 +7,16 @@ namespace SeznamLidi.Database
     {
         public DbSet<Person> Persons { get; set; }
 
-        public PersonContext()
+        public PersonContext(DbContextOptions options) : base(options)
         {
             Database.EnsureCreated();
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            // soubor naší databáze (soubor sqlite)
-            optionsBuilder.UseSqlite("Data Source=seznamlidi.db");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    // soubor naší databáze (soubor sqlite)
+        //    optionsBuilder.UseSqlite("Data Source=seznamlidi.db");
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

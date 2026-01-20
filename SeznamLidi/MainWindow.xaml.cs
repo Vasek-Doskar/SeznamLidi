@@ -1,4 +1,5 @@
-﻿using SeznamLidi.Database;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SeznamLidi.Database;
 using SeznamLidi.Interfaces;
 using SeznamLidi.Managers;
 using SeznamLidi.Models;
@@ -6,6 +7,7 @@ using SeznamLidi.Repositories;
 using SeznamLidi.Windows;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Automation.Peers;
 
 namespace SeznamLidi
 {
@@ -14,33 +16,60 @@ namespace SeznamLidi
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly IServiceProvider _provider;
         public ObservableCollection<Person> Data { get; set; }
-        public IPersonManager PersonManager {  get; set; }
-        public MainWindow()
+
+        public IPersonManager PersonManager { get; set; }
+        public MainWindow(IServiceProvider provider)
         {
-            IPersonRepository personRepository = new PersonRepository(new PersonContext());
-            PersonManager = new PersonManager(personRepository);
+            _provider = provider;
+
+            var scope = _provider.CreateScope();
+            PersonManager = scope.ServiceProvider.GetRequiredService<IPersonManager>();
+
+
             Data = new ObservableCollection<Person>(PersonManager.GetAll());
-            InitializeComponent();            
+            InitializeComponent();
             LV.DataContext = Data;
         }
 
 
-        void OnClick(object sender, RoutedEventArgs e) { }
+        void OnUpdateClick(object sender, RoutedEventArgs e)
+        {
+            Person? person = LV.SelectedItem as Person;
+            if (person != null)
+            {
 
-        void OnRemoveClick(object sender, RoutedEventArgs e) {
-            Person? selected = LV.SelectedItem as Person;
-            if (selected != null) {
+                UpdatePersonWindow updatePersonWindow = _provider.GetRequiredService<UpdatePersonWindow>();
+                updatePersonWindow.Person = person;
 
-                PersonManager.Delete(selected.Id);
-                Data.Remove(selected);
-            
+                updatePersonWindow.Closed += (s, e) =>
+                {
+                    Data = new ObservableCollection<Person>(PersonManager.GetAll());
+                    LV.DataContext = Data;
+                };
+
+                updatePersonWindow.Owner = this;
+
+                updatePersonWindow.Show();
             }
         }
 
-        void AddClick(object sender, RoutedEventArgs e) 
+        void OnRemoveClick(object sender, RoutedEventArgs e)
         {
-            CreateNewPersonWindow CNPW = new(PersonManager);
+            Person? selected = LV.SelectedItem as Person;
+            if (selected != null)
+            {
+                PersonManager.Delete(selected.Id);
+                Data.Remove(selected);
+            }
+        }
+
+        void AddClick(object sender, RoutedEventArgs e)
+        {
+            //CreateNewPersonWindow CNPW = new(PersonManager);
+            using var scope = _provider.CreateScope();
+            CreateNewPersonWindow CNPW = scope.ServiceProvider.GetRequiredService<CreateNewPersonWindow>();
             CNPW.Owner = this;
             CNPW.Closed += (s, e) => { Data.Add(CNPW.newPerson); };
             CNPW.ShowDialog();
