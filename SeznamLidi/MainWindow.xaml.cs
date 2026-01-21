@@ -1,14 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SeznamLidi.Database;
 using SeznamLidi.Interfaces;
-using SeznamLidi.Managers;
 using SeznamLidi.Models;
-using SeznamLidi.Repositories;
 using SeznamLidi.Windows;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Automation.Peers;
-using System.Windows.Data;
 
 namespace SeznamLidi
 {

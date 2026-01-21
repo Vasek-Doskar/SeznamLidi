@@ -14,8 +14,6 @@ namespace SeznamLidi.Windows
         private readonly IServiceScope _scope;
         
         public Person Person{get;set;}
-        //public Person? Person { get => _person; set { _person = value; DataContext = _person; } }
-        //private Person? _person;
         private readonly IServiceProvider _provider;
         public UpdatePersonWindow(IServiceProvider provider, int id)
         {
